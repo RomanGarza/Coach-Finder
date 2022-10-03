@@ -1,0 +1,12 @@
+FEATURES 
+
+Find a Coach
+- list all available coaches
+- view coach details
+- register as a coach
+- contact a coach
+
+
+Requests (messages)
+- contact a coach
+- view incoming Requests
