@@ -1,6 +1,7 @@
 <template>
   <section>Filter</section>
   <section>
+    <base-card>
     <div class="flex justify-between">
       <button>Refresh</button>
       <button>
@@ -19,13 +20,15 @@
       ></coach-item>
     </ul>
     <h3 v-else>No coaches found.</h3>
+    </base-card>
   </section>
 </template>
 
 <script>
 import CoachItem from "../../components/Coaches/CoachItem.vue";
+import BaseCard from "../../components/UI/BaseCard.vue";
 export default {
-  components: { CoachItem },
+  components: { CoachItem, BaseCard },
   computed: {
     filteredCoaches() {
       return this.$store.getters["coaches/coaches"];

@@ -1,15 +1,18 @@
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
-import store from "./stores/index.js"
+import { createApp } from "vue";
+import { createPinia } from "pinia";
+import store from "./stores/index.js";
 
-import App from './App.vue'
-import router from './router'
+import App from "./App.vue";
+import router from "./router";
 
-import './assets/main.css'
+import "./assets/main.css";
+import BaseCard from "./components/UI/BaseCard.vue";
 
-const app = createApp(App)
+const app = createApp(App);
 
-app.use(store)
-app.use(router)
+app.use(store);
+app.use(router);
 
-app.mount('#app')
+app.component("base-card", BaseCard);
+
+app.mount("#app");
