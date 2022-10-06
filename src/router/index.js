@@ -9,41 +9,20 @@ import ContactCoach from "../views/Requests/ContactCoach.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    { path: '/', redirect: '/coaches' },
+    { path: '/coaches', component: CoachesList },
     {
-      path: "/",
-      redirect: { name: "Coaches" },
-    },
-    {
-      path: "/coaches",
-      name: "Coaches",
-      component: CoachesList,
-    },
-    {
-      path: "/coach/:id",
-      name: "CoachId",
+      path: '/coaches/:id',
       component: CoachDetails,
+      props: true,
       children: [
-        {
-          path: "/contact",
-          component: ContactCoach,
-        },
-      ],
+        { path: 'contact', component: ContactCoach } // /coaches/c1/contact
+      ]
     },
-    {
-      path: "/register",
-      name: "Register",
-      component: CoachRegistration,
-    },
-    {
-      path: "/requests",
-      name: "Requests",
-      component: RequestsReceived,
-    },
-    {
-      path: "/:notFound(.*)",
-      component: NotFound,
-    },
-  ],
+    { path: '/register', component: CoachRegistration },
+    { path: '/requests', component: RequestsReceived },
+    { path: '/:notFound(.*)', component: NotFound }
+  ]
 });
 
 export default router;

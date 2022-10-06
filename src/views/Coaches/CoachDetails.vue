@@ -1,4 +1,58 @@
 <template>
-    Details
-    <router-link to="/coaches/id">Contact</router-link>
-</template>
+    <section>
+      <base-card>
+        <h2 class="font-bold">{{ fullName }}</h2>
+        <h3>${{ rate }}/hour</h3>
+      </base-card>
+    </section>
+    <section>
+      <base-card>
+        <header>
+          <h2 class="font-bold">Interested? Reach out now!</h2>
+          <router-link class="btn btn-info" :to="contactLink">Contact</router-link>
+        </header>
+        <router-view></router-view>
+      </base-card>
+    </section>
+    <section>
+      <base-card>
+      <div class="flex flex-row m-1.5">
+        <base-badge v-for="area in areas" :key="area" :type="area" :title="area"></base-badge>
+    </div>
+        <p>{{ description }}</p>
+      </base-card>
+    </section>
+  </template>
+
+<script>
+    export default {
+      props: ['id'],
+      data() {
+        return {
+          selectedCoach: null,
+        };
+      },
+      computed: {
+        fullName() {
+          return this.selectedCoach.firstName + ' ' + this.selectedCoach.lastName;
+        },
+        areas() {
+          return this.selectedCoach.areas;
+        },
+        rate() {
+          return this.selectedCoach.hourlyRate;
+        },
+        description() {
+          return this.selectedCoach.description;
+        },
+        contactLink() {
+          return this.$route.path + '/' + this.id + '/contact';
+        }
+      },
+      created() {
+        this.selectedCoach = this.$store.getters['coaches/coaches'].find(
+          (coach) => coach.id === this.id
+        );
+      },
+    };
+    </script>

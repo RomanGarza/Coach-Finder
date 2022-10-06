@@ -20,10 +20,37 @@ export default {
           id: "c2",
           firstName: "Julie",
           lastName: "Jones",
-          areas: ["frontend", "career"],
+          areas: ["frontend"],
           description:
             "I am Julie and as a senior developer in a big tech company, I can help you get your first job or progress in your current role.",
           hourlyRate: 30,
+        },
+        {
+          id: "c3",
+          firstName: "Jon",
+          lastName: "Jones",
+          areas: ["frontend", "career"],
+          description:
+            "I'm Jon and I've worked as a freelance web developer for years. Let me help you become a developer as well!",
+          hourlyRate: 38,
+        },
+        {
+          id: "c4",
+          firstName: "Max",
+          lastName: "Holloway",
+          areas: ["backend"],
+          description:
+            "I'm Max and I've worked as a freelance web developer for years. Let me help you become a developer as well!",
+          hourlyRate: 28,
+        },
+        {
+          id: "c5",
+          firstName: "Charles",
+          lastName: "Olivera",
+          areas: ["frontend", "backend"],
+          description:
+            "I'm Charles and I've worked as a freelance web developer for years. Let me help you become a developer as well!",
+          hourlyRate: 24,
         },
       ],
     };

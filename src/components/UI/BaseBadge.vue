@@ -1,7 +1,7 @@
 <template>
-  <span v-if="text == 'FRONTEND'" class="badge badge-primary">{{ text }}</span>
-  <span v-else-if="text == 'BACKEND'" class="badge badge-secondary">{{ text }}</span>
-  <span v-else-if="text == 'CAREER'" class="badge badge-accent">{{ text }}</span>
+  <span v-if="text == 'FRONTEND'" class="badge badge-primary mr-1">{{ text }}</span>
+  <span v-else-if="text == 'BACKEND'" class="badge badge-secondary mr-1">{{ text }}</span>
+  <span v-else-if="text == 'CAREER'" class="badge badge-accent mr-1">{{ text }}</span>
 </template>
 
 <script>
