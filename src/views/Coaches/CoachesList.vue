@@ -8,7 +8,7 @@
   <section>
     <base-card>
       <div class="flex justify-between">
-        <button class="btn btn-outline btn-info" @click="loadCoaches">Refresh</button>
+        <button class="btn btn-outline btn-info" @click="loadCoaches(true)">Refresh</button>
         <router-link v-if="!isCoach && !isLoading" class="btn btn-info" to="/register">Register as a Coach</router-link>
       </div>
       <div v-if="isLoading">
@@ -72,10 +72,10 @@ export default {
     setFilters(updatedFilters) {
       this.activeFilters = updatedFilters;
     },
-    async loadCoaches() {
+    async loadCoaches(refresh = false) {
       this.isLoading = true;
       try {
-        await this.$store.dispatch("coaches/loadCoaches");
+        await this.$store.dispatch("coaches/loadCoaches", {forceRefresh: refresh} );
       } catch (error) {
         this.error = error.message || "Failed to fetch coaches.";
       }
