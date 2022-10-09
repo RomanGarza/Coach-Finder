@@ -1,4 +1,5 @@
 <template>
+  <div>
   <base-dialog :show="!!error" title="An error occurred" @close="handleError">
   <p>{{ error }}</p>
   </base-dialog>
@@ -21,6 +22,7 @@
       <h3 v-else class="my-2.5">No coaches found.</h3>
     </base-card>
   </section>
+</div>
 </template>
 
 <script>
