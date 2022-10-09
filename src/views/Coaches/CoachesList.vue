@@ -5,7 +5,7 @@
   <section>
     <base-card>
       <div class="flex justify-between">
-        <button class="btn btn-outline btn-info">Refresh</button>
+        <button class="btn btn-outline btn-info" @click="loadCoaches">Refresh</button>
         <router-link v-if="!isCoach" class="btn btn-info" to="/register"
           >Register as a Coach</router-link
         >
@@ -65,9 +65,15 @@ export default {
       return this.$store.getters["coaches/hasCoaches"];
     },
   },
+  created() {
+    this.loadCoaches();
+  },
   methods: {
     setFilters(updatedFilters) {
       this.activeFilters = updatedFilters;
+    },
+    loadCoaches() {
+      this.$store.dispatch("coaches/loadCoaches");
     },
   },
 };

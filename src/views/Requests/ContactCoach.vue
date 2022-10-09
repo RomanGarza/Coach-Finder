@@ -10,7 +10,7 @@
         </div>
         <p class="text-red-600" v-if="!formIsValid">Please fill form correctly.</p>
         <div class="actions">
-            <button class="btn btn-primary">Send Message</button>
+            <button class="btn btn-primary mt-2">Send Message</button>
         </div>
     </form>
 </template>
@@ -34,7 +34,7 @@ export default {
             this.$store.dispatch('requests/contactCoach', {
                 email: this.email,
                 message: this.message,
-                coachId: this.$route.id
+                coachId: this.$route.params.id
 
             })
             this.$router.replace('/coaches')
