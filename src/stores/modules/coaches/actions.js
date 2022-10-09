@@ -19,7 +19,7 @@ export default {
     const responseData = await response.json();
 
     if (!response.ok) {
-      const error = new Error(responseData.message || 'Failed to fetch!');
+      const error = new Error(responseData.message || "Failed to fetch!");
       throw error;
     }
 
@@ -28,14 +28,19 @@ export default {
       id: userId,
     });
   },
-  async loadCoaches(context) {
+  async loadCoaches(context, payload) {
+    if (!payload.forceRefresh && !context.getters.shouldUpdate) {
+      return;
+    } // if we already have coaches, we don't need to fetch them again
+  
+
     const response = await fetch(
       `https://coachfinder-2f9cd-default-rtdb.firebaseio.com/coaches.json`
     );
     const responseData = await response.json();
 
     if (!response.ok) {
-      const error = new Error(responseData.message || 'Failed to fetch!');
+      const error = new Error(responseData.message || "Failed to fetch!");
       throw error;
     }
 
@@ -53,5 +58,6 @@ export default {
       coaches.push(coach);
     }
     context.commit("setCoaches", coaches);
+    context.commit("setFetchTimestamp");
   },
 };
