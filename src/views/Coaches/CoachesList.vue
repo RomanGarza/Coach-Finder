@@ -1,4 +1,7 @@
 <template>
+  <base-dialog :show="!!error" title="An error occurred" @close="handleError">
+  <p>{{ error }}</p>
+  </base-dialog>
   <section>
     <coach-filter @change-filter="setFilters"></coach-filter>
   </section>
@@ -6,22 +9,16 @@
     <base-card>
       <div class="flex justify-between">
         <button class="btn btn-outline btn-info" @click="loadCoaches">Refresh</button>
-        <router-link v-if="!isCoach" class="btn btn-info" to="/register"
-          >Register as a Coach</router-link
-        >
+        <router-link v-if="!isCoach && !isLoading" class="btn btn-info" to="/register">Register as a Coach</router-link>
       </div>
-      <ul v-if="hasCoaches" class="m-0 p-0 list-none">
-        <coach-item
-          v-for="coach in filteredCoaches"
-          :key="coach.id"
-          :id="coach.id"
-          :first-name="coach.firstName"
-          :last-name="coach.lastName"
-          :rate="coach.hourlyRate"
-          :areas="coach.areas"
-        ></coach-item>
+      <div v-if="isLoading">
+        <base-spinner></base-spinner>
+      </div>
+      <ul v-else-if="hasCoaches" class="m-0 p-0 list-none">
+        <coach-item v-for="coach in filteredCoaches" :key="coach.id" :id="coach.id" :first-name="coach.firstName"
+          :last-name="coach.lastName" :rate="coach.hourlyRate" :areas="coach.areas"></coach-item>
       </ul>
-      <h3 v-else>No coaches found.</h3>
+      <h3 v-else class="my-2.5">No coaches found.</h3>
     </base-card>
   </section>
 </template>
@@ -30,11 +27,14 @@
 import CoachItem from "../../components/Coaches/CoachItem.vue";
 import CoachFilter from "../../components/Coaches/CoachFilter.vue";
 import coaches from "../../stores/modules/coaches";
+import BaseDialog from "../../components/UI/BaseDialog.vue";
 
 export default {
-  components: { CoachItem, CoachFilter },
+  components: { CoachItem, CoachFilter, BaseDialog },
   data() {
     return {
+      isLoading: false,
+      error: null,
       activeFilters: {
         frontend: true,
         backend: true,
@@ -62,7 +62,7 @@ export default {
       });
     },
     hasCoaches() {
-      return this.$store.getters["coaches/hasCoaches"];
+      return !this.isLoading && this.$store.getters["coaches/hasCoaches"];
     },
   },
   created() {
@@ -72,11 +72,22 @@ export default {
     setFilters(updatedFilters) {
       this.activeFilters = updatedFilters;
     },
-    loadCoaches() {
-      this.$store.dispatch("coaches/loadCoaches");
+    async loadCoaches() {
+      this.isLoading = true;
+      try {
+        await this.$store.dispatch("coaches/loadCoaches");
+      } catch (error) {
+        this.error = error.message || "Failed to fetch coaches.";
+      }
+      this.isLoading = false;
+    },
+    handleError() {
+      this.error = null;
     },
   },
 };
 </script>
 
-<style></style>
+<style>
+
+</style>

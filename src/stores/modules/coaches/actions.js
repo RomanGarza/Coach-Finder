@@ -16,11 +16,11 @@ export default {
       }
     );
 
-    // const responseData = await response.json();
+    const responseData = await response.json();
 
     if (!response.ok) {
-      // const error = new Error(responseData.message || 'Failed to fetch!');
-      // throw error;
+      const error = new Error(responseData.message || 'Failed to fetch!');
+      throw error;
     }
 
     context.commit("registerCoach", {
@@ -35,8 +35,8 @@ export default {
     const responseData = await response.json();
 
     if (!response.ok) {
-      // const error = new Error(responseData.message || 'Failed to fetch!');
-      // throw error;
+      const error = new Error(responseData.message || 'Failed to fetch!');
+      throw error;
     }
 
     const coaches = [];
