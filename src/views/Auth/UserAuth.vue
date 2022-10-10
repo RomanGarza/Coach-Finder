@@ -1,6 +1,6 @@
 <template>
   <div>
-    <base-dialog :show="!!error" title="An error occurred"  @close="handleError">
+    <base-dialog :show="!!error" title="An error occurred" @close="handleError">
       <p>{{error}}</p>
     </base-dialog>
     <base-dialog :show="isLoading" fixed title="Authenticating.... ">
@@ -62,12 +62,19 @@ export default {
       }
       this.isLoading = true; // show spinner
 
+      const actionPayload = {
+        email: this.email,
+        password: this.password
+      };
+
       try {
         if (this.mode === 'login') {
-          this.login();
+          await this.$store.dispatch('login', actionPayload);
         } else {
-          await this.$store.dispatch('signup', { email: this.email, password: this.password });
+          await this.$store.dispatch('signup', actionPayload);
         }
+        const redirectUrl = '/' + (this.$route.query.redirect || 'coaches'); // if no redirect query param, redirect to /coaches
+        this.$router.replace(redirectUrl);
       } catch (err) {
         this.error = err.message || 'Failed to authenticate. Check your login data.';
       }

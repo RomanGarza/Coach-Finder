@@ -6,33 +6,35 @@ export default {
       lastName: data.last,
       description: data.desc,
       hourlyRate: data.rate,
-      areas: data.areas,
+      areas: data.areas
     };
+
+    const token = context.rootGetters.token;
+
     const response = await fetch(
-      `https://coachfinder-2f9cd-default-rtdb.firebaseio.com/coaches/${userId}.json`,
+      `https://coachfinder-2f9cd-default-rtdb.firebaseio.com/coaches/${userId}.json?auth=` +
+        token,
       {
-        method: "PUT",
-        body: JSON.stringify(coachData),
+        method: 'PUT',
+        body: JSON.stringify(coachData)
       }
     );
 
-    const responseData = await response.json();
+    // const responseData = await response.json();
 
     if (!response.ok) {
-      const error = new Error(responseData.message || "Failed to fetch!");
-      throw error;
+      // error ...
     }
 
-    context.commit("registerCoach", {
+    context.commit('registerCoach', {
       ...coachData,
-      id: userId,
+      id: userId
     });
   },
   async loadCoaches(context, payload) {
     if (!payload.forceRefresh && !context.getters.shouldUpdate) {
       return;
-    } // if we already have coaches, we don't need to fetch them again
-  
+    }
 
     const response = await fetch(
       `https://coachfinder-2f9cd-default-rtdb.firebaseio.com/coaches.json`
@@ -40,7 +42,7 @@ export default {
     const responseData = await response.json();
 
     if (!response.ok) {
-      const error = new Error(responseData.message || "Failed to fetch!");
+      const error = new Error(responseData.message || 'Failed to fetch!');
       throw error;
     }
 
@@ -53,11 +55,12 @@ export default {
         lastName: responseData[key].lastName,
         description: responseData[key].description,
         hourlyRate: responseData[key].hourlyRate,
-        areas: responseData[key].areas,
+        areas: responseData[key].areas
       };
       coaches.push(coach);
     }
-    context.commit("setCoaches", coaches);
-    context.commit("setFetchTimestamp");
-  },
+
+    context.commit('setCoaches', coaches);
+    context.commit('setFetchTimestamp');
+  }
 };

@@ -10,7 +10,8 @@
     <base-card>
       <div class="flex justify-between">
         <button class="btn btn-outline btn-info" @click="loadCoaches(true)">Refresh</button>
-        <router-link v-if="!isCoach && !isLoading" class="btn btn-info" to="/register">Register as a Coach</router-link>
+        <router-link class="btn btn-info" to="/auth?redirect=register" v-if="!isLoggedIn">Login to register</router-link>
+        <router-link v-if="isLoggedIn && !isCoach && !isLoading" class="btn btn-info" to="/register">Register as a Coach</router-link>
       </div>
       <div v-if="isLoading">
         <base-spinner></base-spinner>
@@ -45,6 +46,9 @@ export default {
     };
   },
   computed: {
+    isLoggedIn() {
+      return this.$store.getters.isAuthenticated;
+    },
     isCoach() {
       return this.$store.getters["coaches/isCoach"];
     },
