@@ -7,10 +7,16 @@ import NotFound from "../views/NotFound.vue";
 import ContactCoach from "../views/Requests/ContactCoach.vue";
 import UserAuth from "../views/Auth/UserAuth.vue";
 import store from "../stores/index.js";
+import HomeView from "../views/HomeView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      path: "/home",
+      component: HomeView,
+      meta: { requiresAuth: true },
+    },
     { path: "/", redirect: "/coaches" },
     { path: "/coaches", component: CoachesList },
     {
