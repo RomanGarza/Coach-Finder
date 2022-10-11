@@ -1,7 +1,7 @@
 <template>
   <div class="navbar bg-primary text-primary-content">
     <div class="flex-1">
-      <a class="btn btn-ghost normal-case text-xl"><router-link to="/home ">Find a Coach</router-link></a>
+      <a class="btn btn-ghost normal-case text-xl"><router-link to="/home">Find a Coach</router-link></a>
     </div>
     <div class="flex-none">
       <ul class="menu menu-horizontal p-0">
